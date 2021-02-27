@@ -9,7 +9,13 @@ let resultTextElement = document.querySelector('#result')
 // organized in the order of the script tags so the countriesAndCodes array is available to this script.
 
 console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - just proving it is available 
+let randomNumber = Math.floor(Math.random() * countriesAndCodes.length);
+console.log(randomNumber);
 
+window.addEventListener("load", () => {
+    let randomCountry = countriesAndCodes[randomNumber].name;
+    randomCountryElement.innerHTML = randomCountry;
+})
 
 // TODO when the page loads, select an element at random from the countriesAndCodes array
 
