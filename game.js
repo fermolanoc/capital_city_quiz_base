@@ -9,17 +9,18 @@ let resultTextElement = document.querySelector('#result')
 // organized in the order of the script tags so the countriesAndCodes array is available to this script.
 
 console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - just proving it is available 
-let randomNumber = Math.floor(Math.random() * countriesAndCodes.length);
-console.log(randomNumber);
 
+// generate a random number between 0 and the length of the countriesAndCodes array.
+// This number will be used as an index when getting random countries
+let randomNumber = Math.floor(Math.random() * countriesAndCodes.length);
+
+
+// when the page loads, select an element at random from the countriesAndCodes array
 window.addEventListener("load", () => {
-    let randomCountry = countriesAndCodes[randomNumber].name;
-    randomCountryElement.innerHTML = randomCountry;
+    let randomCountry = countriesAndCodes[randomNumber].name; // get a random country from array
+    randomCountryElement.innerHTML = randomCountry; // show the random country on webpage
 })
 
-// TODO when the page loads, select an element at random from the countriesAndCodes array
-
-// TODO display the country's name in the randomCountryElement 
 
 // TODO add a click event handler to the submitButton.  When the user clicks the button,
 //  * read the text from the userAnswerElement 
@@ -33,6 +34,25 @@ window.addEventListener("load", () => {
 //  * Finally, display an appropriate message in the resultTextElement to tell the user if they are right or wrong. 
 //      For example "Correct! The capital of Germany is Berlin" or "Wrong - the capital of Germany is not G, it is Berlin"
 
+// Click event handler for 'Check Answer' button
+submitButton.addEventListener("click", () => {
+    let userAnswer = userAnswerElement.value; // save user answer into variable
+
+    // get official code for country randomly shown
+    let countryCode = countriesAndCodes[randomNumber]["alpha-2"];
+    console.log(countryCode);
+
+    // generate random API based on the country generated passing the countryCode
+    let url = `https://api.worldbank.org/v2/country/${countryCode}?format=json`;
+    // fetch json data from API url generated for the chosen country
+    fetch(url)
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+})
 
 // TODO finally, connect the play again button. Clear the user's answer, select a new random country, 
 // display the country's name, handle the user's guess. If you didn't use functions in the code you've 
