@@ -13,11 +13,11 @@ console.log(countriesAndCodes)  // You don't need to log countriesAndCodes - jus
 // generate a random number between 0 and the length of the countriesAndCodes array.
 // This number will be used as an index when getting random countries
 let randomNumber = Math.floor(Math.random() * countriesAndCodes.length);
+let randomCountry = countriesAndCodes[randomNumber].name; // get a random country from array
 
 
 // when the page loads, select an element at random from the countriesAndCodes array
 window.addEventListener("load", () => {
-    let randomCountry = countriesAndCodes[randomNumber].name; // get a random country from array
     randomCountryElement.innerHTML = randomCountry; // show the random country on webpage
 })
 
@@ -42,15 +42,27 @@ submitButton.addEventListener("click", () => {
     let countryCode = countriesAndCodes[randomNumber]["alpha-2"];
     console.log(countryCode);
 
+
     // generate random API based on the country generated passing the countryCode
     let url = `https://api.worldbank.org/v2/country/${countryCode}?format=json`;
     // fetch json data from API url generated for the chosen country
     fetch(url)
         .then(res => {
-            return res.json();
+            return res.json(); // generate data in json format
         })
-        .then(data => {
-            console.log(data);
+        .then(data => { // assign json results to 'data' variable
+            let countryCapital = data[1][0].capitalCity; // get capital value of the random country
+
+            // convert both user answer and capital city of the random country to lowercase to compare them
+            // show message indicating wether answer is correct or wrong
+            if (userAnswer.toLowerCase() === countryCapital.toLowerCase()) {
+                resultTextElement.innerHTML = `Correct! The capital of ${randomCountry} is ${countryCapital}`;
+            } else {
+                resultTextElement.innerHTML = `Wrong! The capital of ${randomCountry} is not ${userAnswer}; It is ${countryCapital}`;
+            }
+        })
+        .catch(err => {
+            alert("An error occurred getting the country's info", err);
         })
 })
 
