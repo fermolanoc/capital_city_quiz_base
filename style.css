@@ -1,0 +1,29 @@
+body {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: steelblue;
+  color: whitesmoke;
+}
+
+#random-country {
+  margin-bottom: 20px;
+  color: black;
+  text-transform: uppercase;
+}
+
+.btn {
+  border-color: whitesmoke;
+  color: black;
+}
+.btn:hover {
+  background-color: whitesmoke;
+  color: steelblue;
+  border: none;
+  outline: none;
+  margin-left: 2px;
+}
